@@ -36,11 +36,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN ln -s /usr/bin/python${PYTHON_VER} /usr/bin/python &&  \
     pip install --upgrade pip \
-    pip install torch==${PYTORCH_VER}+cu${CUDA_VER} torchvision==0.15.1+cu{CUDA_VER} --index-url https://download.pytorch.org/whl/cu117 \
+    pip install torch torchvision \
     opencv-python==4.7.0.72 diffusers==0.14.0 transformers==4.27.3 accelerate==0.18.0 clean-fid==0.1.35 torchmetrics[image]==0.11.4 wandb==0.14.0 matplotlib==3.7.1 tqdm xformers
 
     # pip install torch torchvision torchaudio jupyterlab
 # torch-2.0.1+cu117.with.pypi.cudnn-cp310-cp310-linux_x86_64.whl
+    # pip install torch==${PYTORCH_VER}+cu${CUDA_VER} torchvision==0.15.1+cu{CUDA_VER} --index-url https://download.pytorch.org/whl/cu117 \
 
 
 # Create a working directory
