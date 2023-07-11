@@ -170,3 +170,25 @@ This work has partially been supported by the PNRR project “Future Artificial 
 ## LICENSE
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />All material is made available under [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). You can **use, redistribute, and adapt** the material for **non-commercial purposes**, as long as you give appropriate credit by **citing our paper** and **indicate any changes** that you've made.
 
+## Usage(docker-compose)
+```bash
+# ビルド
+docker-compose build
+docker-compose build --no-cache
+# コンテナ起動
+docker-compose up
+
+# コンテナ起動（バックグランド起動）
+docker-compose up -d
+# 起動しているか確認
+docker-compose ps
+
+# ログ出し、デバッグ
+docker-compose logs -f
+# コンテナ入る
+# docker-compose exec (service名) (command)
+docker-compose exec ladi-vton /bin/bash
+
+# コンテナ停止
+docker-compose down
+```
