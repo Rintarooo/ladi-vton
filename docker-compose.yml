@@ -8,6 +8,13 @@ services:
     tty: true
     volumes:
       - ".:/app"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     # volumes:
     #   - "~/.Xauthority:/root/.Xauthority"
     # environment:
