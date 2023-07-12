@@ -22,6 +22,15 @@ from utils.set_seeds import set_seed
 from utils.val_metrics import compute_metrics
 from vto_pipelines.tryon_pipe import StableDiffusionTryOnePipeline
 
+# https://qiita.com/amedama/items/b856b2f30c2f38665701
+from logging import getLogger, StreamHandler, DEBUG
+logger = getLogger(__name__)
+handler = StreamHandler()
+handler.setLevel(DEBUG)
+logger.setLevel(DEBUG)
+logger.addHandler(handler)
+logger.propagate = False
+
 PROJECT_ROOT = Path(__file__).absolute().parents[1].absolute()
 
 # Will error if the minimal version of diffusers is not installed. Remove at your own risks.
@@ -106,15 +115,22 @@ def main():
         set_seed(args.seed)
 
     # Load scheduler, tokenizer and models.
+    logger.debug(f"loading... {args.pretrained_model_name_or_path}, scheduler")
     val_scheduler = DDIMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")
     val_scheduler.set_timesteps(50, device=device)
+    logger.debug(f"loading... {args.pretrained_model_name_or_path}, text_encoder")
     text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
+    logger.debug(f"loading... {args.pretrained_model_name_or_path}, vae")
     vae = AutoencoderKL.from_pretrained(args.pretrained_model_name_or_path, subfolder="vae")
+    logger.debug(f"loading... vision_encoder, laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
     vision_encoder = CLIPVisionModelWithProjection.from_pretrained("laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
+    logger.debug(f"loading... processor, laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
     processor = AutoProcessor.from_pretrained("laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
+    logger.debug(f"loading... {args.pretrained_model_name_or_path}, tokenizer")
     tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
 
     # Load the trained models from the hub
+    logger.debug(f"loading... unet")
     unet = torch.hub.load(repo_or_dir='miccunifi/ladi-vton', source='github', model='extended_unet', dataset=args.dataset)
     emasc = torch.hub.load(repo_or_dir='miccunifi/ladi-vton', source='github', model='emasc', dataset=args.dataset)
     inversion_adapter = torch.hub.load(repo_or_dir='miccunifi/ladi-vton', source='github', model='inversion_adapter', dataset=args.dataset)

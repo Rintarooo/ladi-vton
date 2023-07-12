@@ -175,6 +175,17 @@ This work has partially been supported by the PNRR project “Future Artificial 
 # インスタンスへローカルのファイルをコピーする
 # gcloud compute scp --recurse ./zalando-hd-resized.zip satorin-cudagl-02:/home/s18295/mypj/vtryon/ladi-vton
 
+# docker-compose のアプデ（Deep Leanring VMに入ってるdocker-composeのバージョンが1.25.0と古いため）
+# https://heppoko-room.net/archives/1892
+```bash
+sudo rm -rf /usr/bin/docker-compose
+sudo curl -L https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo mv /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose version
+```
+
+
 ```bash
 # ビルド
 docker-compose build
