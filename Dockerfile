@@ -26,13 +26,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     vim \
     git \
     bzip2 \
-    gcc \
+    build-essential \
     vim \
     libgl1-mesa-glx \
     libglib2.0-0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# install Python 
+RUN wget https://www.python.org/ftp/python/$PYTHON_VER/Python-$PYTHON_VER.tgz &&  \
+    tar -xf Python-$PYTHON_VER.tgz &&  \
+    cd Python-$PYTHON_VER &&  \
+    ./configure --enable-optimizations &&  \
+    make -j $(nproc) &&  \
+    make altinstall
 
 RUN ln -s /usr/bin/python${PYTHON_VER} /usr/bin/python &&  \
     pip install --upgrade pip \
