@@ -171,6 +171,10 @@ This work has partially been supported by the PNRR project “Future Artificial 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />All material is made available under [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). You can **use, redistribute, and adapt** the material for **non-commercial purposes**, as long as you give appropriate credit by **citing our paper** and **indicate any changes** that you've made.
 
 ## Usage(docker-compose)
+
+# インスタンスへローカルのファイルをコピーする
+# gcloud compute scp --recurse ./zalando-hd-resized.zip satorin-cudagl-02:/home/s18295/mypj/vtryon/ladi-vton
+
 ```bash
 # ビルド
 docker-compose build

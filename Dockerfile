@@ -11,7 +11,8 @@ FROM nvidia/cuda:${CUDA_VER}-base-ubuntu${UBUNTU_VER}
 ENV WORK_DIR /app
 
 # https://freak-da.hatenablog.com/entry/2020/03/31/094140
-ARG PYTHON_VER=310
+ARG PYTHON_VER_WO=310
+ARG PYTHON_VER
 ARG CUDA_VER=117
 ARG PYTORCH_VER
 ARG UBUNTU_VER
@@ -41,7 +42,7 @@ RUN wget https://www.python.org/ftp/python/$PYTHON_VER/Python-$PYTHON_VER.tgz &&
     make -j $(nproc) &&  \
     make altinstall
 
-RUN ln -s /usr/bin/python${PYTHON_VER} /usr/bin/python &&  \
+RUN ln -s /usr/bin/python${PYTHON_VER_WO} /usr/bin/python &&  \
     pip install --upgrade pip \
     pip install torch torchvision \
     opencv-python==4.7.0.72 diffusers==0.14.0 transformers==4.27.3 accelerate==0.18.0 clean-fid==0.1.35 torchmetrics[image]==0.11.4 wandb==0.14.0 matplotlib==3.7.1 tqdm xformers
@@ -107,7 +108,7 @@ WORKDIR ${WORK_DIR}
 
 # # miniconda
 # # https://repo.anaconda.com/miniconda/
-# ARG MINICONDA_VERSION=py${PYTHON_VER}_23.3.1-0-Linux-x86_64
+# ARG MINICONDA_VERSION=py${PYTHON_VER_WO}_23.3.1-0-Linux-x86_64
 # # latest-Linux-x86_64
 # # py37_4.8.3-Linux-x86_64
 # # ARG MINICONDA_MD5=751786b92c00b1aeae3f017b781018df
