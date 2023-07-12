@@ -123,7 +123,10 @@ def main():
     logger.debug(f"loading... {args.pretrained_model_name_or_path}, vae")
     vae = AutoencoderKL.from_pretrained(args.pretrained_model_name_or_path, subfolder="vae")
     logger.debug(f"loading... vision_encoder, laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
-    vision_encoder = CLIPVisionModelWithProjection.from_pretrained("laion/CLIP-ViT-H-14-laion2B-s32B-b79K", output_loading_info=True)
+    vision_encoder, load_dict_clip = CLIPVisionModelWithProjection.from_pretrained("laion/CLIP-ViT-H-14-laion2B-s32B-b79K", output_loading_info=True)
+    for k,v in load_dict_clip.items():
+        logger.debug(f"vision encoder dict {k}: {v}")
+        
     logger.debug(f"loading... processor, laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
     processor = AutoProcessor.from_pretrained("laion/CLIP-ViT-H-14-laion2B-s32B-b79K")
     logger.debug(f"loading... {args.pretrained_model_name_or_path}, tokenizer")
